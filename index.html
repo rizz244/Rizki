@@ -2,38 +2,54 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Peta Titik Peil Banjir 2025</title>
+  <title>Peta Rencana Pembangunan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.awesome-markers/dist/leaflet.awesome-markers.css" />
   <style>#map { height: 100vh; width: 100vw; }</style>
 </head>
 <body>
   <div id="map"></div>
 
+  <!-- JavaScript Library -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
   <script src="https://unpkg.com/papaparse@5.3.2/papaparse.min.js"></script>
 
   <script>
     const map = L.map('map').setView([-7.1, 107.9], 10);
 
-    // Layer OSM (default)
-    let osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap'
-    }).addTo(map);
-
-    // Layer Satelit
-    let satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/' +
-      'World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    // Base layers
+    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
+    const satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
       attribution: 'Tiles © Esri'
     });
+    L.control.layers({ "OSM": osm, "Satelit": satelite }).addTo(map);
 
-    // Layer control (pilih basemap)
-    L.control.layers({
-      "OSM": osm,
-      "Satelit": satelite
-    }).addTo(map);
+    // Global GPS coord
+    let userLat = null;
+    let userLng = null;
 
-    // Ambil dan parsing CSV
+    // Fungsi ikon sesuai tujuan
+    function getIcon(tujuan) {
+      const tujuanLower = (tujuan || '').toLowerCase();
+      let iconName = 'info-sign';
+      let markerColor = 'blue';
+
+      if (tujuanLower.includes('rumah sakit')) { iconName = 'plus-sign'; markerColor = 'red'; }
+      else if (tujuanLower.includes('perumahan') || tujuanLower.includes('rumah')) { iconName = 'home'; markerColor = 'green'; }
+      else if (tujuanLower.includes('kantor')) { iconName = 'building'; markerColor = 'cadetblue'; }
+      else if (tujuanLower.includes('pabrik')) { iconName = 'cog'; markerColor = 'darkpurple'; }
+      else if (tujuanLower.includes('restoran') || tujuanLower.includes('cafe')) { iconName = 'cutlery'; markerColor = 'orange'; }
+
+      return L.AwesomeMarkers.icon({
+        icon: iconName,
+        markerColor: markerColor,
+        prefix: 'glyphicon'
+      });
+    }
+
+    // Ambil dan tampilkan marker dari CSV
     fetch('data.csv')
       .then(res => res.text())
       .then(csv => {
@@ -45,13 +61,23 @@
               if (row.Y && row.X) {
                 const lat = row.Y;
                 const lng = row.X;
-                let popup = `
-                  <b>${row["Nama Pemohon"]}</b><br>
-                  Tujuan: ${row["Tujuan Pemohon"]}<br>
-                  Elevasi: ${row["Z"]} mdpl<br>
-                  Koordinat: ${lat.toFixed(5)}, ${lng.toFixed(5)}
+                const tujuan = row["Tujuan Pemohon"] || "Tidak diketahui";
+                const nama = row["Nama Pemohon"] || "Anonim";
+                const luas = row["Luas"] || "-";
+                const elevasi = row["Z"] || "-";
+                const koordinat = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+                const gmapsLink = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+
+                const popup = `
+                  <b>${nama}</b><br>
+                  <b>Tujuan:</b> ${tujuan}<br>
+                  <b>Luas:</b> ${luas} m²<br>
+                  <b>Elevasi:</b> ${elevasi} mdpl<br>
+                  <b>Koordinat:</b> ${koordinat}<br>
+                  <a href="${gmapsLink}" target="_blank">📍 Rute ke Lokasi (Google Maps)</a>
                 `;
-                L.marker([lat, lng])
+
+                L.marker([lat, lng], { icon: getIcon(tujuan) })
                   .addTo(map)
                   .bindPopup(popup);
               }
@@ -60,14 +86,46 @@
         });
       });
 
-    // Tambahkan layer batas Garut (GeoJSON)
-    fetch("garut_boundary.geojson")
-      .then(res => res.json())
-      .then(data => {
-        L.geoJSON(data, {
-          style: { color: "red", weight: 2 }
-        }).addTo(map);
+    // Lokasi GPS pengguna
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(pos) {
+        userLat = pos.coords.latitude;
+        userLng = pos.coords.longitude;
+
+        L.circleMarker([userLat, userLng], {
+          radius: 8,
+          fillColor: "#00f",
+          color: "#00f",
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.7
+        }).addTo(map).bindPopup("📍 Lokasi Anda Saat Ini");
+
+        map.setView([userLat, userLng], 14);
       });
+    }
+
+    // Klik di peta → popup rute ke lokasi
+    map.on('click', function(e) {
+      const lat = e.latlng.lat.toFixed(6);
+      const lng = e.latlng.lng.toFixed(6);
+
+      let routeLink = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+      if (userLat !== null && userLng !== null) {
+        routeLink = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}`;
+      }
+
+      const popupContent = `
+        📍 <b>Lokasi Klik:</b><br>
+        Koordinat: ${lat}, ${lng}<br>
+        <a href="${routeLink}" target="_blank">🧭 Buka Rute di Google Maps</a>
+      `;
+
+      L.popup()
+        .setLatLng(e.latlng)
+        .setContent(popupContent)
+        .openOn(map);
+    });
   </script>
 </body>
 </html>
