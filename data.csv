@@ -59,7 +59,237 @@ No,Nama Pemohon,Tujuan Pemohon,X,Y,Z,Luas yang dimohon,Luas Lahan yang diperbole
 58,PT. Mega Propertindo Rahman,Pembangunan Perumahan,107.9133722,-7.23833333,790,,44499 M2,2025
 59,Sundarto,Pembangunan Klinik,107.8896194,-7.18961944,736,,128 M2,2025
 60,PT. Sinarmas Sentosa Abadi,Pembangunan Perumahan,107.9292194,-7.22660278,782,,11859 M2,2025
-61,"Aceng Sopyan, S.Ag",Pembangunan Gedung Pertemuan,107.9497167,-7.20261389,747,,50000 M2,2025
-62,PT. Ingsu Tama Lubista,Pembangunan Perumahan dan Pertokoan Taman Land,107.8994056,-7.12215278,750,,905 M2,2025
-63,Deddy Mulyana,Pembangunan Toko,107.7864889,-7.35389444,1251,,2020 M2,2025
-64,"Yayasan Syafi Asiyah a.n dr. Hj. Tika Mirantiayu, Sp. Rad",Perluasan Rumah Sakit Nurhayati,107.9211611,-7.21819444,737,,,
+61,"Aceng Sopyan, S.Ag",Pembangunan Gedung Pertemuan,107.9497167,-7.20261389,747,,770 M2,2025
+62,PT. Ingsu Tama Lubista,Pembangunan Perumahan dan Pertokoan Taman Land,107.8994056,-7.12215278,750,,50000 M2,2025
+63,Deddy Mulyana,Pembangunan Toko,107.7864889,-7.35389444,1251,,905 M2,2025
+64,"Yayasan Syafi Asiyah a.n dr. Hj. Tika Mirantiayu, Sp. Rad",Perluasan Rumah Sakit Nurhayati,107.9211611,-7.21819444,737,,2020 M2,2025
+65,PT. Bumi Pasir Makmur Utama,Pabrik,107.9005028,-7.116591667,730,,2777 M2,2024
+66,PT. Hansha Naratama Akusara,Perumahan,107.9385167,-7.172686111,695,,8041 M2,2024
+67,PT. Ridwan Berkah Jaya,Perumahan,107.9045194,-7.112486111,735,,39899 M2,2024
+68,PT. ACC Mares Putra,Perumahan,107.9141861,-7.214916667,724,,12797 M2,2024
+69,PT. Ghafar Danadipa Mahidara,Perumahan,107.9661583,-7.052702778,561,,3580 M2,2024
+70,PT. Graha Panca Laksana,Perumahan,107.8774806,-7.190305556,763,,5180 M2,2024
+71,Yayasan Khadapi Bintang Utama,Klinik,107.8642389,-7.234472222,850,,"2922,94 M2",2024
+72,PT. Kaylla Putra Pratama,Perumahan,107.8984194,-7.198952778,712,,20578 M2,2024
+73,Dinas Koperasi dan Usaha Kecil Menengah,RPB,107.9081972,-7.211708333,714,,1555 M2,2024
+74,PT. Tiga Pilar Griya Pratama,Perumahan,107.9834611,-7.189116667,773,,26092 M2,2024
+75,Yayasan Bumi Jamuju Indah,Sarana Prasarana Pelatihan Pertanian,107.8112306,-7.174211111,1355,,127855 M2,2024
+76,PT. Priatna Manunggal Lima,Perumahan,107.7790806,-7.312308333,1350,,20000 M2,2024
+77,"Drs. Sasa Sayuti, M.Si",Ruko,107.92355,-7.216125,735,,108 M2,2024
+78,PT. Rovita Propertindo Sukses,Perumahan,107.9973111,-7.047316667,497,,"46343,94 M2",2024
+79,PT. Bakti Harapan Jaya (Revisi),Perumahan,107.9066639,-7.165108333,739,,35184 M2,2024
+80,Hj. Enung Umu Kulsum,Laboratorium,107.8914528,-7.240122222,790,,40 M2,2024
+81,PT. Asep Berkah Mandiri,Perumahan,107.9530778,-7.200813889,732,,10220 M2,2024
+82,PT. Mustika Ranca Bango,SPBU,107.8751417,-7.190177778,765,,3568 M2,2024
+83,PT. Yudha Perkasa Indonesia Jaya,Perumahan,107.9495583,-7.200558333,739,,30000 M2,2024
+84,PT. Gagak Amanat Mandiri,Perumahan,107.84745,-7.196322222,930,,40000 M2,2024
+85,PT. Kum Biizdnillah Abada,Perumahan,107.8092611,-7.353652778,1254,,"18882,69 M2",2024
+86,PT. Prodia Widyahusada Tbk,Laboratorium,107.8890889,-7.201666667,749,,691 M2,2024
+87,PT. Djoglo Megah Propertindo,Perumahan,107.9415778,-7.211730556,757,,46299 M2,2024
+88,Dinas Pendidikan,Gedung,107.8869306,-7.204041667,755,,3920 M2,2024
+89,PT. Citra Winabuana Kencana,Perumahan,107.9907583,-7.118672222,664,,5229 M2,2024
+90,PT. Ghani Rahma Lesmana,Perumahan,107.9757667,-7.172966667,706,,2380 M2,2024
+91,PT. Indomarco Prismatama,Minimarket,107.9120306,-7.488583333,580,,228 M2,2024
+92,PT. Godam Sejahtera Abadi,Perumahan,107.8176306,-7.197863889,1032,,23271 M2,2024
+93,PT. Bumi Putra Propertindo,Perumahan,107.8747083,-7.196183333,774,,"11699,47 M2",2024
+94,PT. Faris Lukman Jaya,Perumahan,107.9221806,-7.251136111,869,,5921 M2,2024
+95,Rudi Permana,Supermarket,107.902125,-7.213536111,713,,1743 M2,2024
+96,PT. Silver Skyline Indonesia,Pabrik,107.9854583,-7.048197222,502,,"137135,93 M2",2024
+97,Perum Perhutani,Kios,107.7944917,-7.309627778,1218,,"147,36 M2",2024
+98,Muhammad Asharam Shahrivar,Hot Spring,107.8704583,-7.177802778,783,,1735 M2,2024
+99,PT. Cikal Buana Persada,Perumahan,107.8925111,-7.146619444,835,,186429 M2,2024
+100,Hindra Setiawan,Klinik,107.9106778,-7.222625,728,,312 M2,2024
+101,Hindra Setiawan,Klinik,107.9101639,-7.221133333,727,,413 M2,2024
+102,PT. Allegra Bumi Pratama,Perumahan,107.831875,-7.216455556,961,,13548 M2,2024
+103,PT. Selera Amni Nusantara,Perumahan,107.984725,-7.192113889,777,,4966 M2,2024
+104,PT. Kum Biiznillah Abada,Perumahan,107.9453306,-7.199477778,733,,8579 M2,2024
+105,PT. Mukti Jaya Agro,Gudang,107.8330389,-7.229344444,929,,"4696,37 M2",2024
+106,PT. Dipo International Pahala Automotif,Dealer,107.8979167,-7.190494444,716,,3535 M2,2024
+107,PT. Patraya Cipta Sarana,Perumahan,107.9933361,-7.181072222,781,,9862 M2,2024
+108,PT. Berkah Jaya Bersama Propertindo,Perumahan,107.9819361,-7.184386111,752,,15000 M2,2024
+109,PT. Ginanjar Jaya Mandiri,Perumahan,107.9442778,-7.204166667,740,,5789 M2,2024
+110,Dinas Pemuda dan Olahraga,Gedung,107.903375,-7.206838889,708,,2308 M2,2024
+111,PT Bintang Griya Ady Surja,Perumahan,107.9142889,-7.241658333,798,,"10874,3 M2",2024
+112,Alir Widianti,Ruko,107.8717861,-7.178227778,774,,40 M2,2024
+113,PT. Utama Mulya Family,Perumahan,107.8617972,-7.205675,823,,"8777,34 M2",2024
+114,PT. Sunda Wangi Tohaga,Perumahan,107.9841639,-7.036508333,544,,"10019,31 M2",2024
+115,Yayat Nurhayat,Penginapan,107.891175,-7.188608333,731,,281 M2,2024
+116,PT. Arrayan Berkah Gemilang,Gudang,107.9311472,-7.107233333,688,,400 M2,2024
+117,Perumnas,Perumahan,107.9616444,-7.200302778,755,,53884 M2,2024
+118,dr. H. Helmi Budiman,Klinik,107.8997167,-7.191263889,716,,250 M2,2024
+119,dr. Hani Firdiani,Klinik,107.8547833,-7.212316667,898,,993 M2,2024
+120,Edo Pengky Irawan,Ruko,107.8981278,-7.208086111,715,,130 M2,2024
+121,Hj. Erma Tintin Suryatin,Ruko,107.9043944,-7.214797222,715,,2695 M2,2024
+122,PT. Assanusiyah Sembilan Putra,Perumahan,107.9351111,-7.218511111,776,,24000 M2,2024
+123,PT. Harika Cipta Mandiri,Perumahan,107.9092667,-7.246763889,820,,15000 M2,2024
+124,Ir. Asep Sudrajat,GOR,107.9031667,-7.225391667,728,,985 M2,2024
+125,PT. Inovasi Hunian Nusantara,Perumahan,107.9704333,-7.208069444,830,,18305 M2,2024
+126,PD. Mandala-525,Gudang,107.9143778,-7.197077778,704,,7047 M2,2024
+127,PT. Gama Mulia Awani,Perumahan,107.8522222,-7.207319444,918,,9500 M2,2024
+128,PT. Mitra Unggal Gas,Gudang,107.9608722,-7.077247222,592,,324 M2,2024
+129,PT. Kandaga Jaya Properti,Perumahan,108.0748583,-7.057616667,630,,16584 M2,2024
+130,PT. Semesta Utama Raya Indonesia,Perumahan,107.8423,-7.217025,914,,95800 M2,2024
+131,Revisi PT. Rovita Propertindo Sukses,Perumahan,107.9973139,-7.047211111,496,,"23353,65 M2",2024
+132,dr. Husodo,Klinik,107.9009972,-7.219177778,721,,325 M2,2024
+133,PT. Graha Panca Laksana,Perumahan,107.8774806,-7.190305556,763,,5180 M2,2024
+134,Ai Rohimah,Apotek,107.7994528,-7.680272222,6,,166 M2,2024
+135,Tresna,Rumah Tinggal,107.7784667,-7.356302778,1270,,827 M2,2024
+136,PT. Indomarco Prismatama,Minimarket,107.8629389,-7.257905556,895,,562 M2,2024
+137,PT. Kafie Jaya Mandiri,Perumahan,107.9347806,-7.116291667,697,,"32442,46 M2",2024
+138,PT. Sinergi Niaga Properti,Perumahan,107.7986111,-7.217330556,1100,,13500 M2,2024
+139,PMN RS Mata Cicendo Bandung,Rumah Sakit,107.887025,-7.198105556,750,,760 M2,2024
+140,Yayasan Pendidikan Dasar dan Menengah Pasundan,Sekolah,107.9054972,-7.225405556,734,,8210 M2,2024
+141,Pasar Bumdes Sukaratu Sejahtera,Bumdes,108.0442417,-7.053175,561,,"1932,86 M2",2024
+142,PT. Ada Berkah Properti,Perumahan,107.8073167,-7.352083333,1251,,6891 M2,2024
+143,Erwan Ahmad,Apotek & Rumah Tinggal,107.8980306,-7.110013889,715,,157 M2,2024
+144,Mega Nur Rahmat,Gudang,107.9033222,-7.195980556,710,,980 M2,2024
+145,PT. Sigma Anugerah Utama,Perumahan,107.9427194,-7.040183333,603,,"58929,44 M2",2024
+146,Putri Wildah Nuramalina,Apotek,107.9631722,-7.067605556,592,,555 M2,2024
+147,Yogie Basuki,Minimarket,107.9039361,-7.439263889,656,,350 M2,2024
+148,Yogie Basuki,Minimarket,107.9836778,-7.099605556,620,,652 M2,2024
+149,Yayasan Pendidikan Kewiraswastaan Ar Rafi',Sekolah,107.8475778,-7.071755556,1049,,45960 M2,2024
+150,CV. Soraya Anugrah Mutiara,Minimarket,107.952925,-7.043688889,564,,884 M2,2024
+151,Dedi Hidayat Bin Sutia,Toko,107.7941833,-7.215247222,1128,,336 M2,2024
+152,Dian Andriani,Apotek,107.88555,-7.203175,758,,99 M2,2024
+153,Klinik Cihuni,Klinik,107.898975,-7.068897222,704,,172 M2,2024
+154,PT. Sunda Wangi Tohaga,Perumahan,107.8547306,-7.205138889,904,,13100 M2,2024
+155,dr. Jajang Badrujaman,Klinik,107.9121917,-7.4839,590,,"405,1 M2",2024
+156,Eka Okvitasari,Kantor dan Gudang,107.900175,-7.095802778,690,,406 M2,2024
+157,drg. Santi Oktapiani,Klinik,107.9013528,-7.200613889,711,,220 M2,2024
+158,PT. Mega Propertindo Rahman,Perumahan,107.8167889,-7.369405556,1259,,38000 M2,2024
+159,Sri Suarsih,Villa & Café,107.887925,-7.175488889,744,,1365 M2,2024
+160,CV. Shakeena Mandiri Grup,Minimarket,107.8152861,-7.365975,1266,,"323,05 M2",2024
+161,PT. Aditama Putra Properti,Perumahan,107.9522417,-7.047344444,589,,19170 M2,2024
+162,PT. Fatih Jaya Bersinergi,Perumahan,107.8152861,-7.365975,1266,,"323,05 M2",2024
+163,PT. Kanaya Arafah Putri,Perumahan,107.8620722,-7.222388889,864,,15000 M2,2024
+164,PT. Alzira Jaya Perkasa,SPBU,107.9226472,-7.112936111,718,,5964 M2,2024
+165,PT. Holim Jaya Indonesia,Pabrik,107.966325,-7.041644444,549,,"552,563.92 M2",2024
+166,dr. Madya Sukarno,Klinik,107.9451222,-7.207930556,752,,138.00 M2,2024
+167,dr. Madya Sukarno,Klinik,107.9582917,-7.094975,605,,742.00 M2,2024
+168,Ihsan Taufik Mauldani,Klinik,107.9808333,-7.061275,535,,"1,536.00 M2",2024
+169,dr. Madya Sukarno,Klinik,107.8981111,-7.103052778,702,,754.00 M2,2024
+170,PT. Human Needs Network,Bangunan Real Estate/Penyewaan Gedung,107.8932444,-7.201675,733,,"6,465.00 M2",2024
+171,PT. Karya Cipta Sanjaya,Perumahan,107.9695972,-7.057255556,549,,"33,100.00 M2",2024
+172,Dinas Perkim Rumah Relokasi Bencana Banjarwangi,Relokasi,107.8717167,-7.418547222,889,,"1,500.00 M2",2024
+173,Dinas Perkim Rumah Relokasi Bencana Pakenjeng,Relokasi,107.6941361,-7.469305556,650,,"3,000.00 M2",2024
+174,Kosim Kartawinata,Gudang,107.916225,-7.205291667,709,,"1,447.00 M2",2024
+175,PT. Amaka Pondok Daud,Perumahan,107.9656472,-7.142958333,669,,"47,169.00 M2",2024
+176,PT. Caturtama Manunggal Persada,Hotel,107.8859361,-7.162327778,776,,"50,087.13 M2",2024
+177,Lilis Andriani,Penginapan,107.7010778,-7.66805,7,,"1,680.00 M2",2024
+178,Ir. Anditya Maulana T,Rumah Tahfidz,107.5629694,-7.469363889,549,,"1,191.30 M2",2024
+179,A Nurjaman Diningrum,Klinik,107.8946889,-7.255594444,883,,280.00 M2,2024
+180,PT. Krista Persada Makmur,Perumahan,107.8991528,-7.188755556,715,,"16,170 M2",2024
+181,PT. Safwan Fadillah Rahman,Perumahan,107.8583889,-7.209408333,891,,"15,032.00 M2",2024
+182,PT. Sura Bawana Sakti,Perumahan,107.780925,-7.35525,1261,,"5,310.00 M2",2024
+183,Rustandi,Hotel,107.7512944,-7.218072222,1548,,"1,343.00 M2",2024
+184,Agus Ahmad,Klinik,107.8122194,-7.274166667,1002,,"1,531.00 M2",2024
+185,Yudi Sudisman,Kantor,107.8817833,-7.190427778,755,,"1,665.00 M2",2024
+186,"dr. H. Arvi Iskandar, MMRS",Klinik,107.7314222,-7.643727778,17,,164.00 M2,2024
+187,"Dedi Yusuf Apriadi, S.E",Minimarket,107.97695,-7.181747222,727,,301.74 M2,2024
+188,PT. Lebak Nangka Al Nusantara,Perumahan,108.0076806,-7.021466667,529,,"3,400.00 M2",2024
+189,PT. Cahaya Pratama Propertindo,Perumahan,107.6675028,-7.616291667,25,,"9,993.00 M2",2024
+190,PT. Panca Jasa Sarana,Perumahan,107.7988111,-7.307175,1196,,"22,210.00 M2",2024
+191,Siti Patimah,Ruko,107.9071083,-7.212444444,713,,152.00 M2,2024
+192,Dinas Perpustakaan dan Kearsipan,Gedung,107.8981778,-7.220055556,713,,"1,183.00 M2",2024
+193,PT. Garda Abadi Sakti,Perumahan,107.9489167,-7.154027778,701,,"4,429.00 M2",2024
+194,PT. Himbar Bumi Cakra,Perumahan,108.087775,-7.033547222,633,,"33,222.00 M2",2024
+195,Tjoa I Siung,Rumah Tinggal,107.907325,-7.212852778,714,,323.00 M2,2024
+196,PT. Adhy Jaya Dev,Perumahan,107.9842417,-7.126833333,666,,"10,778.75 M2",2024
+197,"Dedi Yusuf Apriadi, S.E",Minimarket,107.8789389,-7.083966667,741,,318.17 M2,2024
+198,Revisi PT. Safwan Fadillah Rahman,Perumahan,107.8580389,-7.209219444,891,,"7,000.00 M2",2024
+199,PT. Naratama Sinar Selaras,Villatel,107.8861222,-7.162494444,774,,"27,580.00 M2",2024
+200,PT. Surya Anugerah Media,Bioskop,107.9128222,-7.226872222,738,"3,834.00 M2","2,886.69 M2",2024
+201,PT. Graha Panca Wijaya,Perumahan,107.8641194,-7.188452778,826,,"5,716.00 M2",2024
+202,PT. Aka Rafasya Putra,Perumahan,108.0048861,-7.027991667,533,,"9,996.00 M2",2024
+203,PT. Sinarmas Sentosa Abadi,Perumahan,107.9292,-7.226591667,782,,"14,130.00 M2",2024
+204,Nina Sabrina,Apotek,107.7949639,-7.308680556,1217,,70.00 M2,2024
+205,Yayasan Rumah Sehat Priangan,Rumah Sehat,107.7898889,-7.273158333,1130,"2,566.00 M2","1,796.00 M2",2024
+206,"Hari Hariyadi Achmad, S.Hut",Apotek,107.6632944,-7.460375,409,,103.00 M2,2024
+207,Camat Cibiuk,Kantor,107.9623111,-7.071125,591,,"3,784.50 M2",2024
+208,Rini Karini,Klinik,107.9879417,-7.106511111,640,876.00 M2,613.40 M2,2024
+209,PT. Tegar Bangun Pratama,Perumahan,107.8512972,-7.204241667,918,,"21.008,32  M2",2023
+210,PT. Assanusiyah Sapalaputra Property,Perumahan,107.9488417,-7.210097222,773,,"21.700,00  M2",2023
+211,Tina Martina,Garasi dan Rumah Tinggal,107.8873611,-7.197025,748,,"231,00 M2",2023
+212,PT. Ingsu Tama Lubista,Perumahan,107.9003944,-7.149108333,763,,"29.778,00 M2",2023
+213,PT. Mega Properindo Rahman,Perumahan,107.8184833,-7.367958333,1265,,"14.712,00 M2",2023
+214,Klinik Pratama PKU Muhammadiyah ,Klinik,107.9082111,-7.2159,719,,"299,00 M2",2023
+215,dr. Melinda Hartono,Praktik Dokter Mandiri dan Apotek,107.9118111,-7.215252778,720,,"85,00 M2",2023
+216,PT. Duki Wijaya Propertindo,Perumahan,107.9577667,-7.204472222,766,,"12.274,00 M2",2023
+217,Balai Besar Kesehatan Paru Masyarakat Bandung (BBKPN),Gedung Layanan UPF Garut,107.8871972,-7.206086111,750,,"8.008,00 M2",2023
+218,Senjaya,Gudang Retail,107.9072583,-7.239336111,767,,"400,00 M2",2023
+219,PT. Deriz Bangun Sejahtera,Perumahan,107.8983944,-7.095763889,695,,"6.203,00 M2",2023
+220,PT. Nadira Wahana Perkasa,,,,,,-,2023
+221,PT. Bakti Harapan Jaya,Perumahan,107.9065667,-7.165125,739,,"29.947,00 M2",2023
+222,Aep Saepudin,Gudang,107.9140361,-7.194863889,702,,"2.830,00 M2",2023
+223,PT. Jati Berkah Indonesia,Taman Wisata Antapura De Djati,107.965275,-7.061066667,565,,"42.733,10 M2",2023
+224,Tirta Kencana Hotel dan Resort,Penambahan Gedung / Kamar ,107.8742639,-7.178780556,765,,"3.280,00 M2",2023
+225,Ade Hoerudin,Gudang,107.8973222,-7.096813889,697,,"1.662,00 M2",2023
+226,PT. Amanda Pilar Sejahtera,Perumahan,107.9252361,-7.221777778,754,,"10.870,00 M2",2023
+227,PT. Aka Rafasya Putra,Perumahan,108.0129139,-7.052541667,545,,"5.832,00 M2",2023
+228,PT. Ada Berkah Properti,Perumahan,108.0889083,-7.047713889,627,,"6.610,00 M2",2023
+229,PT. Pancar Pawitan Tresnasih,Perumahan,107.9539833,-7.048641667,581,,"9.990,00 M2",2023
+230,"Ratmo, SH., MH",Klinik,107.9195278,-7.216027778,729,,"2.265,00 M2",2023
+231,PT. Sunda Wangi Tohaga,Perumahan,107.8547722,-7.205147222,904,,"2.600,00 M2",2023
+232,Pepen Effendi,Gudang,107.7268556,-7.645219444,15,,"2.805,05 M2",2023
+233,PT. Agna Abada Perkasa,Perumahan,107.8759528,-7.181325,756,,"37.097,00 M2",2023
+234,PT. Graha Agnya Perkasa,Perumahan,107.8883444,-7.186394444,742,,"8.500,00 M2",2023
+235,PT. Ghani Rahma Lesmana,Perumahan,107.9157556,-7.127947222,705,,"25.940,00 M2",2023
+236,PT. Soember Alam Djaya,Perumahan,107.9427139,-7.027908333,639,,"25.000,00 M2",2023
+237,Dinas Perhubungan Kabupaten Garut,Terminal Type C ,107.9723083,-7.042272222,547,,"2.597,00 M2",2023
+238,PT. Republic Ternak International,Pembangunan Kandang Kambing Perah,107.8008667,-7.290355556,1124,,"16.858,00 M2",2023
+239,PT. Gagak Amanat Mandiri,Perumahan,107.9688333,-7.204741667,798,,"19.545,00 M2",2023
+240,PT. Kampung Santri Medina,Pembangunan Pondok Wisata,108.0309278,-7.131597222,1095,,"120.602,00 M2",2023
+241,PT. Lebak Nangka Al Nusantara,Perumahan,107.9867139,-7.037891667,543,,"22.000,00 M2",2023
+242,PT. Lebak Nangka Al Nusantara,Perumahan,108.0192583,-7.016169444,547,,"198.522,21 M2",2023
+243,PT. Masoem Putra,SPBU,107.8999944,-7.148547222,770,,"2.285,00 M2",2023
+244,CV. Jaya Bunga Mekar,Gudang Oli,107.9521028,-7.150936111,680,,"1.624,00 M2",2023
+245,PT. Bumi Sekar Rengganis,Perumahan,107.8870444,-7.100791667,784,,"11.857,00 M2",2023
+246,H. Barry Gurnita Jaya Permana,Gedung Serba Guna,107.9770944,-7.181497222,728,,"1.624,00 M2",2023
+247,PT. Median Karya Oetama,Perumahan,107.9770944,-7.181497222,728,,"6.121,00 M2",2023
+248,PT. Panorama Panca Persada,Perumahan,107.7930472,-7.323080556,1261,,"40.757,00 M2",2023
+249,PT. Satria Griya Abadi,Perumahan,107.9459694,-7.212227778,771,,"35.000 ,00 M2",2023
+250,PT. Cahaya Lestari Land,Perumahan,107.9275806,-7.123188889,679,,"22.419,80 M2",2023
+251,PT. Hijra Amanah Property,Perumahan,107.9086556,-7.111836111,734,,"45.538,00 M2",2023
+252,Dian Herdian,Toko,107.75925,-7.217244444,1457,,"336,00 M2",2023
+253,Lalah Ratmilah,Gudang,107.9002806,-7.195208333,713,,356.00 M2,2023
+254, PT. Raffles Pacific Harvest.,Peternakan Sapi dan Sarana Pendukungnya,107.8430806,-7.179638889,1262,,"571.082,00 M2",2023
+255,Klinik Cihideung,Klinik,107.9244361,-7.299463889,965,,"1.542,00 M2",2023
+256,PT. Jasamatra Karya Prima,Rumah Sakit TMC,107.9124167,-7.168341667,723,,"37.915,00 M2",2023
+257,PT. Jakarta Intiland,Pembangunan Hotel serta Food & Beverage Park,107.8994333,-7.211655556,711,,"18.701,00 M2",2023
+258,PT. Kaylla Putra Pratama,Perumahan,107.89835,-7.261061111,889,,"15.000,00 M2",2023
+259,PT. Mitratama Pengembang Sejahtera,Perumahan,107.8860278,-7.234683333,787,,"31.543,76 M2",2023
+260,PT. Bangun Papan Mas,Perumahan,107.95085,-7.03625,666,,"37.700,00 M2",2023
+261,PT. Askara Berkah Saudara,Perumahan,107.9465806,-7.137538889,650,,"28.819,00 M2",2023
+262,Badan Pusat Statistik ,Gudang,107.8859833,-7.203672222,757,,"210,00 M2",2023
+263,PT. Nilando Indah Pratama,Perumahan,107.8255556,-7.207277778,987,,"23.351,00 M2",2023
+264,PT. Griya Pratama,Minimarket,107.9314472,-7.224686111,791,,"350,00 M2",2023
+265,PT. Raja Griya Sukses,Perumahan,107.8765722,-7.191027778,763,,"1.139,00 M2",2023
+266,Frans Sudianto,Apotek,107.8922639,-7.205480556,735,,"140,00 M2",2023
+267,Dudung Sudiana,Pabrik Wood Pelet,107.9005028,-7.116591667,730,,"2.454,00 M2",2023
+268,PT. Garda Abadi Sakti,Perumahan,107.9482389,-7.154419444,695,,"8.620,43 M2",2023
+269,Muhammad Hadji,Toko Grosir,107.9204444,-7.286413889,984,,"116,00 M2",2023
+270,CV. Viorella Ayana Group,Minimarket,107.8356806,-7.393225,1239,,"678,00 M2",2023
+271,CV. Alfarindo Mandiri Perkasa,Minimarket,107.8939222,-7.190527778,725,,"420,00 M2",2023
+272,CV. Surya Mustika,Minimarket,107.9032444,-7.112397222,727,,"317,00 M2",2023
+273,CV. Surya Mustika,Minimarket,107.9372083,-7.219819444,797,,"1.410,00 M2",2023
+274,CV. Surya Mustika,Minimarket,107.817125,-7.373936111,1266,,"837,00 M2",2023
+275,PT. Aka Rafasya Putra,Perumahan,107.9774111,-7.057458333,537,,"9.891,00 M2",2023
+276,PT. Aka Rafasya Putra,Perumahan,108.0559139,-7.055066667,583,,"6.496,00 M2",2023
+277, PT. Terra Renjana Adyatama,Perumahan,107.9063917,-7.112072222,739,,"6.496,00 M2",2023
+278, PT. Raja Griya Sukses,Perumahan,107.8517583,-7.187566667,958,,"22.640,00 M2",2023
+279,Koperasi Pegawai Republik Indonesia (KPRI) Warga Kesehatan,Gedung Serba Guna,107.8882694,-7.203238889,753,,"1.555,00 M2",2023
+280,"dr. H. Arvi Iskandar, MMRS",Klinik,107.9607389,-7.041997222,557,,"938,00 M2",2023
+281,PT. Prakarsa Catur Propertindo,Perumahan,107.9044278,-7.154525,727,,"31.454,00 M2",2023
+282,PT. Jaya Gas Pertama Putra,Gudang,107.6841528,-7.637986111,8,,"182,00 M2",2023
+283,Dinas Perindustrian Perdagangan Energi dan Sumber Daya Mineral,Revitalisasi Pasar Rakyat Cikajang,107.8126389,-7.361005556,1264,,"23.563,00 M2",2023
+284,PT. Bayu Perkasa Mandiri,Perumahan,107.93665,-7.232886111,841,,"1.500,00 M2",2023
+285,PT. Allegra Bumi Pratama,Perumahan,107.9060917,-7.165202778,739,,"27.983,00 M2",2023
+286,PT. Aimar Jaya Propertie,Perumahan,107.8541972,-7.211894444,899,,"19.026,00 M2",2023
+287,Toko a.n Ir. Syamsu Alamsah,Toko,107.8896028,-7.185258333,899,,412 M2,2023
+288,SMK a.n Wawan Setiawan,SMK,107.9655694,-7.051502778,563,,4453 M2,2023
+289,PT. Halimanu Jaya Perkasa,Perumahan,107.8578611,-7.204602778,866,,"16.245,00 M2",2023
+290,PT. Panorama Panca Persada,Perumahan,107.9114167,-7.172611111,716,,"22.361,68 M2",2023
+291,PT. Haber Sukses Bersama,Perumahan,107.8059417,-7.285561111,1034,,"5.853,00 M2",2023
+292,"Drs. H. Tutun Sufiyan Sulaeman, M.Si",Villa dan Rumah Tinggal,107.8920444,-7.187941667,727,,"1.961,77 M2",2023
+293,PT. Krista Ottoland Propertindo,Perumahan,107.890975,-7.227402778,748,,"8.357,00 M2",2023
+294,PT. Indomarco Prismatama,Minimarket,107.9116778,-7.193736111,705,,"225,00 M2",2023
