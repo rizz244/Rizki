@@ -6,8 +6,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
-    #map { height: 100vh; width: 100vw; }
-    .leaflet-top.leaflet-left { top: 70px; }
+    body, html { margin: 0; padding: 0; }
+    #map { position: absolute; top: 0; bottom: 0; left: 300px; right: 0; }
+    #sidebar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 300px;
+      height: 100%;
+      overflow-y: auto;
+      background: #f8f9fa;
+      padding: 10px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+      font-family: sans-serif;
+      font-size: 14px;
+      z-index: 999;
+    }
+    .entry {
+      border-bottom: 1px solid #ccc;
+      padding: 5px 0;
+    }
+    .entry b { display: block; }
+    .entry a {
+      display: inline-block;
+      margin-top: 3px;
+      text-decoration: none;
+      color: #007bff;
+    }
+    .entry a:hover {
+      text-decoration: underline;
+    }
     .custom-control {
       background: white;
       padding: 6px 10px;
@@ -18,145 +46,161 @@
   </style>
 </head>
 <body>
-  <div id="map"></div>
 
-  <!-- JS Library -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/papaparse@5.3.2/papaparse.min.js"></script>
+<div id="sidebar">
+  <h3>Daftar Lokasi</h3>
+  <div id="data-list"></div>
+</div>
 
-  <script>
-    const map = L.map('map').setView([-7.1, 107.9], 10);
+<div id="map"></div>
 
-    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap'
-    }).addTo(map);
+<!-- LIB -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/papaparse@5.3.2/papaparse.min.js"></script>
 
-    const satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles © Esri'
+<script>
+  const map = L.map('map').setView([-7.1, 107.9], 10);
+  let userLat = null;
+  let userLng = null;
+  let userMarker = null;
+  const markers = [];
+
+  const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(map);
+
+  const satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/' +
+    'World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles © Esri'
+  });
+
+  L.control.layers({ "OSM": osm, "Satelit": satelite }).addTo(map);
+
+  function getIcon(tujuan) {
+    const tujuanLower = (tujuan || '').toLowerCase();
+    let icon = L.icon({
+      iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34]
+    });
+    if (tujuanLower.includes('rumah sakit')) icon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/2965/2965567.png', iconSize: [30, 30] });
+    else if (tujuanLower.includes('rumah') || tujuanLower.includes('perumahan')) icon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/69/69524.png', iconSize: [28, 28] });
+    else if (tujuanLower.includes('kantor')) icon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/2933/2933245.png', iconSize: [28, 28] });
+    else if (tujuanLower.includes('pabrik')) icon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/1046/1046790.png', iconSize: [28, 28] });
+    else if (tujuanLower.includes('cafe') || tujuanLower.includes('restoran')) icon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/2623/2623270.png', iconSize: [26, 26] });
+    return icon;
+  }
+
+  function showUserLocation(center = true) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(pos) {
+        userLat = pos.coords.latitude;
+        userLng = pos.coords.longitude;
+
+        if (userMarker) map.removeLayer(userMarker);
+        userMarker = L.circleMarker([userLat, userLng], {
+          radius: 10,
+          color: "#007BFF",
+          fillColor: "#007BFF",
+          fillOpacity: 0.5,
+          weight: 2
+        }).addTo(map).bindPopup("📍 Lokasi Anda Saat Ini").openPopup();
+
+        if (center) map.setView([userLat, userLng], 14);
+      });
+    }
+  }
+
+  // Tombol GPS manual
+  const locateControl = L.control({ position: 'topleft' });
+  locateControl.onAdd = function(map) {
+    const div = L.DomUtil.create('div', 'custom-control leaflet-bar');
+    div.innerHTML = '<span title="Tampilkan Lokasi Anda">📍</span>';
+    div.onclick = () => showUserLocation();
+    return div;
+  };
+  locateControl.addTo(map);
+
+  // Load CSV dan isi marker + daftar
+  fetch('data.csv')
+    .then(res => res.text())
+    .then(csv => {
+      Papa.parse(csv, {
+        header: true,
+        dynamicTyping: true,
+        complete: function(results) {
+          const listContainer = document.getElementById('data-list');
+
+          results.data.forEach((row, idx) => {
+            if (row.Y && row.X) {
+              const lat = row.Y;
+              const lng = row.X;
+              const nama = row["Nama Pemohon"] || "Anonim";
+              const tujuan = row["Tujuan Pemohon"] || "-";
+              const luas = row["Luas yang dimohon"] || "-";
+              const tahun = row["Tahun"] || "-";
+              const popupContent = `
+                <b>${nama}</b><br>
+                <b>Tujuan:</b> ${tujuan}<br>
+                <b>Luas:</b> ${luas}<br>
+                <b>Tahun:</b> ${tahun}<br>
+                <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank">
+                  📍 Rute ke Lokasi
+                </a>
+              `;
+
+              const marker = L.marker([lat, lng], { icon: getIcon(tujuan) })
+                .bindPopup(popupContent)
+                .addTo(map);
+              markers.push(marker);
+
+              // Buat daftar entry
+              const entry = document.createElement('div');
+              entry.className = 'entry';
+              entry.innerHTML = `
+                <b>${nama}</b>
+                Tujuan: ${tujuan}<br>
+                Luas: ${luas}<br>
+                Tahun: ${tahun}<br>
+                <a href="#" onclick="zoomTo(${idx}); return false;">📍 Lihat di Peta</a>
+              `;
+              listContainer.appendChild(entry);
+            }
+          });
+        }
+      });
     });
 
-    L.control.layers({
-      "OSM": osm,
-      "Satelit": satelite
-    }).addTo(map);
+  // Fungsi klik "lihat di peta"
+  function zoomTo(index) {
+    const marker = markers[index];
+    if (marker) {
+      map.setView(marker.getLatLng(), 17);
+      marker.openPopup();
+    }
+  }
 
-    let userLat = null;
-    let userLng = null;
-    let userMarker = null;
+  // Klik manual peta
+  map.on('click', function(e) {
+    const lat = e.latlng.lat.toFixed(6);
+    const lng = e.latlng.lng.toFixed(6);
+    let routeLink = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
 
-    // Fungsi ikon berdasarkan tujuan
-    function getIcon(tujuan) {
-      const tujuanLower = (tujuan || '').toLowerCase();
-      let icon = L.icon({
-        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34]
-      });
-      if (tujuanLower.includes('rumah sakit')) icon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/2965/2965567.png', iconSize: [30, 30] });
-      else if (tujuanLower.includes('rumah') || tujuanLower.includes('perumahan')) icon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/69/69524.png', iconSize: [28, 28] });
-      else if (tujuanLower.includes('kantor')) icon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/2933/2933245.png', iconSize: [28, 28] });
-      else if (tujuanLower.includes('pabrik')) icon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/1046/1046790.png', iconSize: [28, 28] });
-      else if (tujuanLower.includes('cafe') || tujuanLower.includes('restoran')) icon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/2623/2623270.png', iconSize: [26, 26] });
-      return icon;
+    if (userLat && userLng) {
+      routeLink = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}`;
     }
 
-    // Fungsi tampilkan lokasi pengguna
-    function showUserLocation(center = true) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(pos) {
-          userLat = pos.coords.latitude;
-          userLng = pos.coords.longitude;
-
-          if (userMarker) map.removeLayer(userMarker);
-          userMarker = L.circleMarker([userLat, userLng], {
-            radius: 10,
-            color: "#007BFF",
-            fillColor: "#007BFF",
-            fillOpacity: 0.5,
-            weight: 2
-          }).addTo(map).bindPopup("📍 Lokasi Anda Saat Ini").openPopup();
-
-          if (center) map.setView([userLat, userLng], 14);
-        }, function(err) {
-          alert("Gagal mendapatkan lokasi: " + err.message);
-        });
-      } else {
-        alert("Browser Anda tidak mendukung GPS.");
-      }
-    }
-
-    // Tambahkan tombol Lokasi Saya
-    const locateControl = L.control({ position: 'topleft' });
-    locateControl.onAdd = function(map) {
-      const div = L.DomUtil.create('div', 'custom-control leaflet-bar');
-      div.innerHTML = '<span title="Tampilkan Lokasi Anda">📍</span>';
-      div.onclick = () => showUserLocation();
-      return div;
-    };
-    locateControl.addTo(map);
-
-    // Ambil data.csv
-    fetch('data.csv')
-      .then(res => res.text())
-      .then(csv => {
-        Papa.parse(csv, {
-          header: true,
-          dynamicTyping: true,
-          complete: function(results) {
-            results.data.forEach(row => {
-              if (row.Y && row.X) {
-                const lat = row.Y;
-                const lng = row.X;
-                const nama = row["Nama Pemohon"] || "Anonim";
-                const tujuan = row["Tujuan Pemohon"] || "Tidak diketahui";
-                const luasDimohon = row["Luas yang dimohon"] || "-";
-                const luasDiperbolehkan = row["Luas Lahan yang diperbolehkan"] || "-";
-                const elevasi = row["Z"] || "-";
-                const tahun = row["Tahun"] || "-";
-                const koordinat = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-                const gmapsLink = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
-
-                const popup = `
-                  <b>${nama}</b><br>
-                  <b>Tujuan:</b> ${tujuan}<br>
-                  <b>Luas Dimohon:</b> ${luasDimohon}<br>
-                  <b>Luas Diperbolehkan:</b> ${luasDiperbolehkan}<br>
-                  <b>Elevasi:</b> ${elevasi} mdpl<br>
-                  <b>Tahun:</b> ${tahun}<br>
-                  <b>Koordinat:</b> ${koordinat}<br>
-                  <a href="${gmapsLink}" target="_blank">📍 Rute ke Lokasi (Google Maps)</a>
-                `;
-
-                L.marker([lat, lng], { icon: getIcon(tujuan) })
-                  .addTo(map)
-                  .bindPopup(popup);
-              }
-            });
-          }
-        });
-      });
-
-    // Klik peta → rute ke titik klik
-    map.on('click', function(e) {
-      const lat = e.latlng.lat.toFixed(6);
-      const lng = e.latlng.lng.toFixed(6);
-      let routeLink = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
-      if (userLat !== null && userLng !== null) {
-        routeLink = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}`;
-      }
-
-      const popupContent = `
-        📍 <b>Lokasi Klik:</b><br>
+    L.popup()
+      .setLatLng(e.latlng)
+      .setContent(`
+        📍 Lokasi Klik:<br>
         Koordinat: ${lat}, ${lng}<br>
         <a href="${routeLink}" target="_blank">🧭 Buka Rute di Google Maps</a>
-      `;
+      `)
+      .openOn(map);
+  });
+</script>
 
-      L.popup()
-        .setLatLng(e.latlng)
-        .setContent(popupContent)
-        .openOn(map);
-    });
-  </script>
 </body>
 </html>
