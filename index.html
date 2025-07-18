@@ -8,12 +8,20 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.awesome-markers/dist/leaflet.awesome-markers.css" />
   <style>
     #map { height: 100vh; width: 100vw; }
+    .leaflet-top.leaflet-left { top: 70px; }
+    .custom-control {
+      background: white;
+      padding: 6px 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.3);
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <div id="map"></div>
 
-  <!-- Library -->
+  <!-- JS Library -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
   <script src="https://unpkg.com/papaparse@5.3.2/papaparse.min.js"></script>
@@ -36,8 +44,9 @@
 
     let userLat = null;
     let userLng = null;
+    let userMarker = null;
 
-    // Fungsi ikon
+    // Fungsi ikon berdasarkan tujuan
     function getIcon(tujuan) {
       const tujuanLower = (tujuan || '').toLowerCase();
       let iconName = 'info-sign';
@@ -56,7 +65,43 @@
       });
     }
 
-    // Baca data CSV
+    // Fungsi ikon lokasi pengguna
+    const userIcon = L.AwesomeMarkers.icon({
+      icon: 'user',
+      markerColor: 'blue',
+      prefix: 'glyphicon'
+    });
+
+    // Fungsi tampilkan lokasi pengguna
+    function showUserLocation(center = true) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(pos) {
+          userLat = pos.coords.latitude;
+          userLng = pos.coords.longitude;
+
+          if (userMarker) map.removeLayer(userMarker);
+          userMarker = L.marker([userLat, userLng], { icon: userIcon }).addTo(map).bindPopup("📍 Lokasi Anda Saat Ini").openPopup();
+
+          if (center) map.setView([userLat, userLng], 14);
+        }, function(err) {
+          alert("Gagal mengakses lokasi: " + err.message);
+        });
+      } else {
+        alert("Geolocation tidak didukung oleh browser Anda.");
+      }
+    }
+
+    // Tambahkan tombol Lokasi Saya
+    const locateControl = L.control({ position: 'topleft' });
+    locateControl.onAdd = function(map) {
+      const div = L.DomUtil.create('div', 'custom-control leaflet-bar');
+      div.innerHTML = '<span title="Tampilkan Lokasi Anda">📍</span>';
+      div.onclick = () => showUserLocation();
+      return div;
+    };
+    locateControl.addTo(map);
+
+    // Baca CSV dan tampilkan marker
     fetch('data.csv')
       .then(res => res.text())
       .then(csv => {
@@ -97,26 +142,7 @@
         });
       });
 
-    // Lokasi pengguna
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(pos) {
-        userLat = pos.coords.latitude;
-        userLng = pos.coords.longitude;
-
-        L.circleMarker([userLat, userLng], {
-          radius: 8,
-          fillColor: "#00f",
-          color: "#00f",
-          weight: 1,
-          opacity: 1,
-          fillOpacity: 0.7
-        }).addTo(map).bindPopup("📍 Lokasi Anda Saat Ini");
-
-        map.setView([userLat, userLng], 14);
-      });
-    }
-
-    // Klik lokasi peta
+    // Klik peta → tampilkan rute ke titik klik
     map.on('click', function(e) {
       const lat = e.latlng.lat.toFixed(6);
       const lng = e.latlng.lng.toFixed(6);
