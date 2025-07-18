@@ -6,12 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.awesome-markers/dist/leaflet.awesome-markers.css" />
-  <style>#map { height: 100vh; width: 100vw; }</style>
+  <style>
+    #map { height: 100vh; width: 100vw; }
+  </style>
 </head>
 <body>
   <div id="map"></div>
 
-  <!-- JavaScript Library -->
+  <!-- Library -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
   <script src="https://unpkg.com/papaparse@5.3.2/papaparse.min.js"></script>
@@ -19,18 +21,23 @@
   <script>
     const map = L.map('map').setView([-7.1, 107.9], 10);
 
-    // Base layers
-    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
+    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+
     const satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
       attribution: 'Tiles © Esri'
     });
-    L.control.layers({ "OSM": osm, "Satelit": satelite }).addTo(map);
 
-    // Global GPS coord
+    L.control.layers({
+      "OSM": osm,
+      "Satelit": satelite
+    }).addTo(map);
+
     let userLat = null;
     let userLng = null;
 
-    // Fungsi ikon sesuai tujuan
+    // Fungsi ikon
     function getIcon(tujuan) {
       const tujuanLower = (tujuan || '').toLowerCase();
       let iconName = 'info-sign';
@@ -49,7 +56,7 @@
       });
     }
 
-    // Ambil dan tampilkan marker dari CSV
+    // Baca data CSV
     fetch('data.csv')
       .then(res => res.text())
       .then(csv => {
@@ -61,18 +68,22 @@
               if (row.Y && row.X) {
                 const lat = row.Y;
                 const lng = row.X;
-                const tujuan = row["Tujuan Pemohon"] || "Tidak diketahui";
                 const nama = row["Nama Pemohon"] || "Anonim";
-                const luas = row["Luas"] || "-";
+                const tujuan = row["Tujuan Pemohon"] || "Tidak diketahui";
+                const luasDimohon = row["Luas yang dimohon"] || "-";
+                const luasDiperbolehkan = row["Luas Lahan yang diperbolehkan"] || "-";
                 const elevasi = row["Z"] || "-";
+                const tahun = row["Tahun"] || "-";
                 const koordinat = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
                 const gmapsLink = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
 
                 const popup = `
                   <b>${nama}</b><br>
                   <b>Tujuan:</b> ${tujuan}<br>
-                  <b>Luas:</b> ${luas} m²<br>
+                  <b>Luas Dimohon:</b> ${luasDimohon}<br>
+                  <b>Luas Diperbolehkan:</b> ${luasDiperbolehkan}<br>
                   <b>Elevasi:</b> ${elevasi} mdpl<br>
+                  <b>Tahun:</b> ${tahun}<br>
                   <b>Koordinat:</b> ${koordinat}<br>
                   <a href="${gmapsLink}" target="_blank">📍 Rute ke Lokasi (Google Maps)</a>
                 `;
@@ -86,7 +97,7 @@
         });
       });
 
-    // Lokasi GPS pengguna
+    // Lokasi pengguna
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(pos) {
         userLat = pos.coords.latitude;
@@ -105,12 +116,12 @@
       });
     }
 
-    // Klik di peta → popup rute ke lokasi
+    // Klik lokasi peta
     map.on('click', function(e) {
       const lat = e.latlng.lat.toFixed(6);
       const lng = e.latlng.lng.toFixed(6);
-
       let routeLink = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+
       if (userLat !== null && userLng !== null) {
         routeLink = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}`;
       }
