@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Peta Lokasi Rekomendasi Teknis Peil Banjir</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    #map { height: 100vh; width: 100vw; }
+    .leaflet-top.leaflet-left { top: 70px; }
+    .custom-control {
+      background: white;
+      padding: 6px 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.3);
+      cursor: pointer;
+    }
+    #sidebar {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 320px;
+      height: 100%;
+      background: white;
+      overflow-y: auto;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+      padding: 10px;
+      display: none;
+      z-index: 1000;
+    }
+    #sidebar h3 { margin-top: 0; }
+    #toggleSidebarBtn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: white;
+      padding: 6px 12px;
+      z-index: 1100;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+    .list-item {
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      padding: 6px;
+      border-radius: 5px;
+    }
+    .list-item a { text-decoration: none; color: blue; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div id="sidebar">
+    <h3>Daftar Lokasi</h3>
+    <div id="listContainer"></div>
+  </div>
+  <button id="toggleSidebarBtn">📋 Tampilkan Data</button>
+
+  <!-- JS Library -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/papaparse@5.3.2/papaparse.min.js"></script>
+
+  <!-- Script Utama -->
+  <script>
+    const map = L.map('map').setView([-7.1, 107.9], 10);
+
+    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    const satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles © Esri'
+    });
+
+    L.control.layers({
+      "OSM": osm,
+      "Satelit": satelite
+    }).addTo(map);
+
+    let userLat = null;
+    let userLng = null;
+    let userMarker = null;
+
+    function getIcon(tujuan) {
+      const tujuanLower = (tujuan || '').toLowerCase();
+      if (tujuanLower.includes('rumah sakit')) return L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/2965/2965567.png', iconSize: [30, 30] });
+      else if (tujuanLower.includes('rumah') || tujuanLower.includes('perumahan')) return L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/69/69524.png', iconSize: [28, 28] });
+      else if (tujuanLower.includes('kantor')) return L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/2933/2933245.png', iconSize: [28, 28] });
+      else if (tujuanLower.includes('pabrik')) return L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/1046/1046790.png', iconSize: [28, 28] });
+      else if (tujuanLower.includes('cafe') || tujuanLower.includes('restoran')) return L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/2623/2623270.png', iconSize: [26, 26] });
+      return L.icon({ iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png', iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34] });
+    }
+
+    function showUserLocation(center = true) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(pos) {
+          userLat = pos.coords.latitude;
+          userLng = pos.coords.longitude;
+
+          if (userMarker) map.removeLayer(userMarker);
+          userMarker = L.circleMarker([userLat, userLng], {
+            radius: 10,
+            color: "#007BFF",
+            fillColor: "#007BFF",
+            fillOpacity: 0.5,
+            weight: 2
+          }).addTo(map).bindPopup("📍 Lokasi Anda Saat Ini").openPopup();
+
+          if (center) map.setView([userLat, userLng], 14);
+        });
+      }
+    }
+
+    const locateControl = L.control({ position: 'topleft' });
+    locateControl.onAdd = function(map) {
+      const div = L.DomUtil.create('div', 'custom-control leaflet-bar');
+      div.innerHTML = '<span title="Tampilkan Lokasi Anda">📍</span>';
+      div.onclick = () => showUserLocation();
+      return div;
+    };
+    locateControl.addTo(map);
+
+    document.getElementById('toggleSidebarBtn').onclick = function() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.style.display = sidebar.style.display === 'none' ? 'block' : 'none';
+      this.innerText = sidebar.style.display === 'block' ? '❌ Sembunyikan Data' : '📋 Tampilkan Data';
+    };
+
+    fetch('data.csv')
+      .then(res => res.text())
+      .then(csv => {
+        Papa.parse(csv, {
+          header: true,
+          dynamicTyping: true,
+          complete: function(results) {
+            const listContainer = document.getElementById('listContainer');
+            results.data.forEach(row => {
+              if (row.Y && row.X) {
+                const lat = row.Y;
+                const lng = row.X;
+                const nama = row["Nama Pemohon"] || "Anonim";
+                const tujuan = row["Tujuan Pemohon"] || "-";
+                const luas = row["Luas yang dimohon"] || "-";
+                const luasBoleh = row["Luas Lahan yang diperbolehkan"] || "-";
+                const elevasi = row["Z"] || "-";
+                const tahun = row["Tahun"] || "-";
+
+                const popup = `
+                  <div style="border:1px solid #ccc; padding:5px; border-radius:5px">
+                    <b>${nama}</b><br>
+                    <b>Tujuan:</b> ${tujuan}<br>
+                    <b>Luas Dimohon:</b> ${luas}<br>
+                    <b>Luas Diperbolehkan:</b> ${luasBoleh}<br>
+                    <b>Elevasi:</b> ${elevasi} mdpl<br>
+                    <b>Tahun:</b> ${tahun}<br>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank">📍 Rute ke Lokasi</a>
+                  </div>`;
+
+                const marker = L.marker([lat, lng], { icon: getIcon(tujuan) })
+                  .addTo(map)
+                  .bindPopup(popup);
+
+                const listItem = document.createElement('div');
+                listItem.className = 'list-item';
+                listItem.innerHTML = `<b>${nama}</b><br>${tujuan}<br><b>Tahun:</b> ${tahun}<br><a href="#" onclick="map.setView([${lat}, ${lng}], 17); return false;">📍 Lihat di Peta</a>`;
+                listContainer.appendChild(listItem);
+              }
+            });
+          }
+        });
+      });
+
+    map.on('click', function(e) {
+      const lat = e.latlng.lat.toFixed(6);
+      const lng = e.latlng.lng.toFixed(6);
+      let routeLink = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+      if (userLat && userLng) {
+        routeLink = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}`;
+      }
+      const popupContent = `
+        <div style="border:1px solid #ccc; padding:5px; border-radius:5px">
+          📍 <b>Lokasi Klik:</b><br>
+          Koordinat: ${lat}, ${lng}<br>
+          <a href="${routeLink}" target="_blank">🧭 Buka Rute di Google Maps</a>
+        </div>`;
+      L.popup().setLatLng(e.latlng).setContent(popupContent).openOn(map);
+    });
+  </script>
+
+  <!-- Tambahan: Layer Batas Administrasi -->
+  <script>
+    fetch('Batas Administrasi.geojson')
+      .then(res => res.json())
+      .then(data => {
+        L.geoJSON(data, {
+          style: {
+            color: "#999",
+            weight: 1,
+            fillOpacity: 0
+          }
+        }).addTo(map);
+      });
+  </script>
+
+  <!-- Tambahan: Layer Data 2025 -->
+  <script>
+    fetch('Data 2025.geojson')
+      .then(res => res.json())
+      .then(data => {
+        const layer2025 = L.geoJSON(data, {
+          style: {
+            color: "#007BFF",
+            fillColor: "#66B2FF",
+            weight: 2,
+            fillOpacity: 0.4
+          },
+          onEachFeature: function (feature, layer) {
+            const koordinat = feature.properties.Koordinat || "-";
+            const luas = feature.properties.Luas || "-";
+            const popupContent = `
+              <div style="border:1px solid #ccc; padding:5px; border-radius:5px">
+                <b>📍 Poligon 2025</b><br>
+                <b>Koordinat:</b> ${koordinat}<br>
+                <b>Luas:</b> ${luas} m²
+              </div>`;
+            layer.bindPopup(popupContent);
+
+            const listContainer = document.getElementById('listContainer');
+            const listItem = document.createElement('div');
+            listItem.className = 'list-item';
+            listItem.innerHTML = `<b>Poligon 2025</b><br><b>Luas:</b> ${luas} m²<br><a href="#" onclick="map.fitBounds(layer.getBounds()); return false;">📍 Zoom ke Area</a>`;
+            listContainer.appendChild(listItem);
+          }
+        }).addTo(map);
+      });
+  </script>
+</body>
+</html>
