@@ -61,7 +61,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/papaparse@5.3.2/papaparse.min.js"></script>
 
-  <!-- Script Asli -->
+  <!-- Script Utama -->
   <script>
     const map = L.map('map').setView([-7.1, 107.9], 10);
 
@@ -188,14 +188,30 @@
     });
   </script>
 
-  <!-- Tambahan Script: Poligon GeoJSON -->
+  <!-- Tambahan: Layer Batas Administrasi -->
   <script>
-    fetch('data_poligon.geojson')
-      .then(response => response.json())
+    fetch('Batas Administrasi.geojson')
+      .then(res => res.json())
       .then(data => {
-        const poligonLayer = L.geoJSON(data, {
+        L.geoJSON(data, {
           style: {
-            color: "#FF5733",
+            color: "#999",
+            weight: 1,
+            fillOpacity: 0
+          }
+        }).addTo(map);
+      });
+  </script>
+
+  <!-- Tambahan: Layer Data 2025 -->
+  <script>
+    fetch('Data 2025.geojson')
+      .then(res => res.json())
+      .then(data => {
+        const layer2025 = L.geoJSON(data, {
+          style: {
+            color: "#007BFF",
+            fillColor: "#66B2FF",
             weight: 2,
             fillOpacity: 0.4
           },
@@ -204,7 +220,7 @@
             const luas = feature.properties.Luas || "-";
             const popupContent = `
               <div style="border:1px solid #ccc; padding:5px; border-radius:5px">
-                <b>📍 Poligon Area</b><br>
+                <b>📍 Poligon 2025</b><br>
                 <b>Koordinat:</b> ${koordinat}<br>
                 <b>Luas:</b> ${luas} m²
               </div>`;
@@ -213,12 +229,11 @@
             const listContainer = document.getElementById('listContainer');
             const listItem = document.createElement('div');
             listItem.className = 'list-item';
-            listItem.innerHTML = `<b>Area Poligon</b><br><b>Luas:</b> ${luas} m²<br><a href="#" onclick="map.fitBounds(layer.getBounds()); return false;">📍 Zoom ke Area</a>`;
+            listItem.innerHTML = `<b>Poligon 2025</b><br><b>Luas:</b> ${luas} m²<br><a href="#" onclick="map.fitBounds(layer.getBounds()); return false;">📍 Zoom ke Area</a>`;
             listContainer.appendChild(listItem);
           }
         }).addTo(map);
-      })
-      .catch(err => console.error("Gagal memuat GeoJSON:", err));
+      });
   </script>
 </body>
 </html>
